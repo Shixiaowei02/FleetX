@@ -24,8 +24,7 @@ base_lr = 0.1
 momentum_rate = 0.9
 l2_decay = 1e-4
 
-epoch = 10
-batch_num = 100
+batch_num = 10
 batch_size = 32
 class_dim = 102
 
@@ -57,7 +56,8 @@ def get_train_loader(place):
                  batch_size=batch_size,
                  shuffle=True,
                  drop_last=True,
-                 num_workers=2)    
+                 num_workers=2,
+                 use_shared_memory=False)    
     return train_loader
 
 def train_resnet():
@@ -86,7 +86,7 @@ def train_resnet():
     exe = paddle.static.Executor(place)
     exe.run(paddle.static.default_startup_program())
 
-    epoch = 10
+    epoch = 1
     step = 0
     for eop in range(epoch):
         for batch_id, (image, label) in enumerate(train_loader()):
